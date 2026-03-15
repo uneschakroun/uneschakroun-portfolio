@@ -34,24 +34,6 @@ export function Header({ onResumeClick, onLogoClick, onCaseStudyClick, onLinkedI
               </motion.button>
             </motion.div>
 
-            {/* LinkedIn Offer Badge */}
-            {onLinkedInOfferClick && (
-              <motion.button
-                onClick={onLinkedInOfferClick}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center cursor-pointer"
-              >
-                <div className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-1.5 sm:py-2 bg-[#c1ff72] hover:bg-[#d4ff9a] transition-colors duration-300">
-                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-black">
-                    LINKEDIN SERVICES
-                  </span>
-                </div>
-              </motion.button>
-            )}
-
             {/* TEMPORARILY HIDDEN - Case Study Badge (restore when requested)
             <motion.button
               onClick={onCaseStudyClick}
