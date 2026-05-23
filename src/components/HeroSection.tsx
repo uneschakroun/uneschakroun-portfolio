@@ -1,5 +1,4 @@
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowUpRight } from 'lucide-react';
 import { GlitchText } from './GlitchText';
 import { Mode } from '../App';
 import asoImage from 'figma:asset/8729a78c210ddc92a48825d48de5e819924a6bc0.png';
@@ -29,7 +28,7 @@ export function HeroSection({ onSectionClick, mode, onToggleMode }: HeroSectionP
   const hoverBorder = isMotion ? 'hover:border-black/50' : 'hover:border-[#c1ff72]/50';
 
   return (
-    <div className={`min-h-screen flex items-center justify-center px-4 sm:px-6 relative pt-24 md:pt-32 pb-12 transition-colors duration-700`}>
+    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 relative pt-24 md:pt-32 pb-12">
       <div className="container mx-auto max-w-7xl w-full">
 
         {/* Hero Header */}
@@ -64,11 +63,7 @@ export function HeroSection({ onSectionClick, mode, onToggleMode }: HeroSectionP
                         key={word}
                         initial={{ opacity: 0, y: 40, rotate: -5 }}
                         animate={{ opacity: 1, y: 0, rotate: 0 }}
-                        transition={{
-                          duration: 0.5,
-                          delay: i * 0.08,
-                          ease: [0.22, 1, 0.36, 1]
-                        }}
+                        transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
                         whileHover={{ scale: 1.1, rotate: [-1, 1, -1, 0], transition: { duration: 0.3 } }}
                         className="text-2xl sm:text-4xl md:text-5xl font-bold uppercase cursor-default"
                         style={{ color: i % 2 === 0 ? 'black' : 'rgba(0,0,0,0.3)' }}
@@ -114,34 +109,20 @@ export function HeroSection({ onSectionClick, mode, onToggleMode }: HeroSectionP
             <p className={`text-xs sm:text-sm ${textMuted} uppercase tracking-[0.3em] font-bold mt-3`}>
               Multilingual · EN · FR · AR
             </p>
-          </div>
-        </motion.div>
 
-        {/* Mode Toggle Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mb-12 sm:mb-16"
-        >
-          <button
-            onClick={onToggleMode}
-            className={`group flex items-center gap-3 border px-5 py-3 transition-all duration-500 ${
-              isMotion
-                ? 'border-black/30 hover:border-black bg-black/5 hover:bg-black/10'
-                : 'border-white/20 hover:border-[#c1ff72] bg-white/5 hover:bg-[#c1ff72]/10'
-            }`}
-          >
-            <div className={`w-2 h-2 rounded-full transition-colors duration-500 ${isMotion ? 'bg-black' : 'bg-[#c1ff72]'}`}></div>
-            <span className={`text-xs font-bold uppercase tracking-[0.3em] transition-colors duration-500 ${
-              isMotion ? 'text-black' : 'text-white'
-            }`}>
-              {isMotion ? 'Switch to Graphic Design' : 'Switch to Motion Typography'}
-            </span>
-            <ArrowUpRight className={`w-4 h-4 transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 ${
-              isMotion ? 'text-black/50' : 'text-white/50'
-            }`} />
-          </button>
+            {/* Mode Toggle Button */}
+            <button
+              onClick={onToggleMode}
+              className={`mt-8 w-full sm:w-auto px-8 py-4 font-bold text-sm uppercase tracking-[0.3em] transition-all duration-500 ${
+                isMotion
+                  ? 'bg-black text-[#c1ff72] hover:bg-black/80'
+                  : 'bg-[#c1ff72] text-black hover:bg-[#d4ff9a]'
+              }`}
+            >
+              {isMotion ? 'Graphic Design' : 'Motion Typography'}
+            </button>
+
+          </div>
         </motion.div>
 
         {/* Animated Marquee */}
@@ -159,9 +140,7 @@ export function HeroSection({ onSectionClick, mode, onToggleMode }: HeroSectionP
                 <img
                   src={marqueeImage}
                   alt="Brand Services"
-                  className={`h-5 sm:h-6 md:h-8 lg:h-10 w-auto transition-all duration-700 ${
-                    isMotion ? 'opacity-30 hover:opacity-60' : 'opacity-30 hover:opacity-50'
-                  }`}
+                  className="h-5 sm:h-6 md:h-8 lg:h-10 w-auto transition-all duration-700 opacity-30 hover:opacity-50"
                   style={{ filter: isMotion ? 'brightness(0)' : 'brightness(2)' }}
                   loading="lazy"
                 />
