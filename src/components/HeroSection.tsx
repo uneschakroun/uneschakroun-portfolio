@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { ArrowUpRight, Sparkles, Mail } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { GlitchText } from './GlitchText';
 import asoImage from 'figma:asset/8729a78c210ddc92a48825d48de5e819924a6bc0.png';
 import base39Image from 'figma:asset/e013c937b6ed02e6b798e44d2cfacb342a304f3c.png';
@@ -213,62 +213,24 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
           </motion.div>
         </div>
 
-        {/* Navigation Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-          <motion.button
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            onClick={() => onSectionClick('process')}
-            className="group relative text-left border border-white/10 p-6 sm:p-8 hover:border-[#c1ff72]/50 transition-all duration-300 active:scale-[0.98]"
-          >
-            <div className="absolute inset-0 bg-[#c1ff72]/0 group-hover:bg-[#c1ff72]/5 transition-all duration-300"></div>
-            <div className="relative z-10 flex flex-col h-full min-h-[220px]">
-              <div className="flex items-start justify-between mb-8">
-                <span className="text-xs sm:text-sm text-[#c1ff72]/60 font-bold uppercase tracking-[0.3em]">01</span>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 border border-white/20 flex items-center justify-center group-hover:border-[#c1ff72] transition-all duration-300">
-                  <Sparkles className="w-6 h-6 sm:w-7 sm:h-7 text-white/40 group-hover:text-[#c1ff72] transition-colors duration-300" />
-                </div>
-              </div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 uppercase leading-tight flex-1">
-                <GlitchText>Services<br />Overview</GlitchText>
-              </h2>
-              <p className="text-xs sm:text-sm text-white/40 uppercase tracking-wide mb-6">Freelance design services & pricing</p>
-              <div className="flex items-center justify-end">
-                <ArrowUpRight className="w-5 h-5 sm:w-6 sm:h-6 text-white/20 group-hover:text-[#c1ff72] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
-              </div>
-              <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#c1ff72] group-hover:w-full transition-all duration-500"></div>
-            </div>
-          </motion.button>
-
-          <motion.button
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-            onClick={() => onSectionClick('contact')}
-            className="group relative text-left border border-white/10 p-6 sm:p-8 hover:border-[#c1ff72]/50 transition-all duration-300 active:scale-[0.98]"
-          >
-            <div className="absolute inset-0 bg-[#c1ff72]/0 group-hover:bg-[#c1ff72]/5 transition-all duration-300"></div>
-            <div className="relative z-10 flex flex-col h-full min-h-[220px]">
-              <div className="flex items-start justify-between mb-8">
-                <span className="text-xs sm:text-sm text-[#c1ff72]/60 font-bold uppercase tracking-[0.3em]">02</span>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 border border-white/20 flex items-center justify-center group-hover:border-[#c1ff72] transition-all duration-300">
-                  <Mail className="w-6 h-6 sm:w-7 sm:h-7 text-white/40 group-hover:text-[#c1ff72] transition-colors duration-300" />
-                </div>
-              </div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 uppercase leading-tight flex-1">
-                <GlitchText>Contact<br />Me</GlitchText>
-              </h2>
-              <p className="text-xs sm:text-sm text-white/40 uppercase tracking-wide mb-6">Let's work together</p>
-              <div className="flex items-center justify-end">
-                <ArrowUpRight className="w-5 h-5 sm:w-6 sm:h-6 text-white/20 group-hover:text-[#c1ff72] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
-              </div>
-              <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#c1ff72] group-hover:w-full transition-all duration-500"></div>
-            </div>
-          </motion.button>
-        </div>
+        {/* Statement Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8 }}
+          className="border border-white/10 p-6 sm:p-8 md:p-12"
+        >
+          <p className="text-xs sm:text-sm text-white/15 uppercase tracking-[0.2em] leading-loose mb-8 break-words">
+            {Array(30).fill('Bla').join(' · ')} ·
+          </p>
+          <div className="h-[1px] w-full bg-white/10 mb-8"></div>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase leading-tight">
+            If My Work<br />
+            <span className="text-white/40">Doesn't Convince You,</span><br />
+            Nothing Will.
+          </h2>
+        </motion.div>
 
       </div>
     </div>
