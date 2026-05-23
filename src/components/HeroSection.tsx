@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { ArrowUpRight, Sparkles, Mail } from 'lucide-react';
 import { GlitchText } from './GlitchText';
 import asoImage from 'figma:asset/8729a78c210ddc92a48825d48de5e819924a6bc0.png';
@@ -9,57 +8,13 @@ import nuaImage from 'figma:asset/3f7f8e75eb30d72bae25f1b0f35471d18ece2bb4.png';
 import artRevoImage from 'figma:asset/56bcda8c22d8322fce62b9f4e84f240aee9309e6.png';
 import marqueeImage from 'figma:asset/bdca5c3cc2e1f8fac4d8b1bfafb1f629483d8a4e.png';
 
-type Lang = 'EN' | 'FR' | 'AR';
-
-const translations = {
-  EN: {
-    badge: 'Available to Relocate',
-    title: 'Senior Designer',
-    subtitle: 'GCC Expertise',
-    description: 'Brand Identity · Brand Guidelines · Social Media Design',
-    featured: 'Featured Work',
-    services: 'Services Overview',
-    servicesDesc: 'Freelance design services & pricing',
-    contact: 'Contact Me',
-    contactDesc: "Let's work together",
-    dir: 'ltr' as const,
-  },
-  FR: {
-    badge: 'Disponible pour relocalisation',
-    title: 'Designer Senior',
-    subtitle: 'Expertise GCC',
-    description: 'Identité de marque · Charte graphique · Design réseaux sociaux',
-    featured: 'Travaux Sélectionnés',
-    services: 'Nos Services',
-    servicesDesc: 'Services design freelance & tarifs',
-    contact: 'Me Contacter',
-    contactDesc: 'Travaillons ensemble',
-    dir: 'ltr' as const,
-  },
-  AR: {
-    badge: 'متاح للانتقال',
-    title: 'مصمم أول',
-    subtitle: 'خبرة الخليج',
-    description: 'هوية بصرية · دليل العلامة · تصميم وسائل التواصل',
-    featured: 'أعمال مميزة',
-    services: 'الخدمات',
-    servicesDesc: 'خدمات تصميم مستقل وأسعار',
-    contact: 'تواصل معي',
-    contactDesc: 'لنعمل معاً',
-    dir: 'rtl' as const,
-  },
-};
-
 interface HeroSectionProps {
   onSectionClick: (sectionId: string) => void;
 }
 
 export function HeroSection({ onSectionClick }: HeroSectionProps) {
-  const [lang, setLang] = useState<Lang>('EN');
-  const t = translations[lang];
-
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 relative pt-24 md:pt-32 pb-12" dir={t.dir}>
+    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 relative pt-24 md:pt-32 pb-12">
       <div className="container mx-auto max-w-7xl w-full">
 
         {/* Hero Header */}
@@ -71,60 +26,20 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
           className="mb-12 sm:mb-16 md:mb-20"
         >
           <div className="border border-white/10 p-6 sm:p-8 md:p-12">
-
-            {/* Language Switcher */}
-            <div className="flex items-center gap-1 mb-8 w-fit">
-              {(['EN', 'FR', 'AR'] as Lang[]).map((l, i) => (
-                <div key={l} className="flex items-center">
-                  <button
-                    onClick={() => setLang(l)}
-                    className={`text-xs font-bold uppercase tracking-[0.2em] px-2 py-1 transition-all duration-200 ${
-                      lang === l
-                        ? 'text-[#c1ff72]'
-                        : 'text-white/30 hover:text-white/60'
-                    }`}
-                  >
-                    {l}
-                  </button>
-                  {i < 2 && <span className="text-white/20 text-xs">|</span>}
-                </div>
-              ))}
-            </div>
-
             <div className="flex items-center gap-3 mb-6">
               <div className="h-[2px] w-12 sm:w-16 bg-[#c1ff72]"></div>
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={lang + 'badge'}
-                  initial={{ opacity: 0, y: 5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -5 }}
-                  transition={{ duration: 0.2 }}
-                  className="text-xs sm:text-sm text-white/40 uppercase tracking-[0.3em] font-bold"
-                >
-                  {t.badge}
-                </motion.span>
-              </AnimatePresence>
+              <span className="text-xs sm:text-sm text-white/40 uppercase tracking-[0.3em] font-bold">Available to Relocate</span>
             </div>
-
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={lang}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-              >
-                <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 uppercase leading-[1.1]">
-                  {t.title}<br />
-                  <span className="text-[#c1ff72] text-lg sm:text-3xl md:text-4xl lg:text-5xl">{t.subtitle}</span>
-                </h1>
-                <p className="text-sm sm:text-base md:text-lg text-white/60 max-w-2xl uppercase tracking-wide leading-relaxed">
-                  {t.description}
-                </p>
-              </motion.div>
-            </AnimatePresence>
-
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 uppercase leading-[1.1]">
+              Senior Designer<br />
+              <span className="text-[#c1ff72] text-lg sm:text-3xl md:text-4xl lg:text-5xl">GCC Expertise</span>
+            </h1>
+            <p className="text-sm sm:text-base md:text-lg text-white/60 max-w-2xl uppercase tracking-wide leading-relaxed">
+              Brand Identity · Brand Guidelines · Social Media Design
+            </p>
+            <p className="text-xs sm:text-sm text-white/30 uppercase tracking-[0.3em] font-bold mt-3">
+              Multilingual · EN · FR · AR
+            </p>
           </div>
         </motion.div>
 
@@ -159,7 +74,7 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
         >
           <div className="flex items-center gap-4">
             <div className="h-[2px] w-8 bg-[#c1ff72]"></div>
-            <span className="text-xs sm:text-sm text-white/40 uppercase tracking-[0.3em] font-bold">{t.featured}</span>
+            <span className="text-xs sm:text-sm text-white/40 uppercase tracking-[0.3em] font-bold">Featured Work</span>
           </div>
         </motion.div>
 
@@ -317,9 +232,9 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
                 </div>
               </div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 uppercase leading-tight flex-1">
-                <GlitchText>{t.services}</GlitchText>
+                <GlitchText>Services<br />Overview</GlitchText>
               </h2>
-              <p className="text-xs sm:text-sm text-white/40 uppercase tracking-wide mb-6">{t.servicesDesc}</p>
+              <p className="text-xs sm:text-sm text-white/40 uppercase tracking-wide mb-6">Freelance design services & pricing</p>
               <div className="flex items-center justify-end">
                 <ArrowUpRight className="w-5 h-5 sm:w-6 sm:h-6 text-white/20 group-hover:text-[#c1ff72] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
               </div>
@@ -344,9 +259,9 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
                 </div>
               </div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 uppercase leading-tight flex-1">
-                <GlitchText>{t.contact}</GlitchText>
+                <GlitchText>Contact<br />Me</GlitchText>
               </h2>
-              <p className="text-xs sm:text-sm text-white/40 uppercase tracking-wide mb-6">{t.contactDesc}</p>
+              <p className="text-xs sm:text-sm text-white/40 uppercase tracking-wide mb-6">Let's work together</p>
               <div className="flex items-center justify-end">
                 <ArrowUpRight className="w-5 h-5 sm:w-6 sm:h-6 text-white/20 group-hover:text-[#c1ff72] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
               </div>
@@ -354,6 +269,7 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
             </div>
           </motion.button>
         </div>
+
       </div>
     </div>
   );
