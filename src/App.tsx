@@ -137,6 +137,8 @@ export default function App() {
 
           {currentPage === 'home' && <Footer />}
           {currentPage === 'home' && <WhatsAppButton phoneNumber="212707227263" />}
+          
+          {/* Action hook fires state machine directly into the contact viewport layout */}
           <PopupTimer onCollaborate={() => setCurrentPage('contact')} />
         </div>
       )}

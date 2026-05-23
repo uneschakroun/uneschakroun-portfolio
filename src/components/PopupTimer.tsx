@@ -12,7 +12,7 @@ export function PopupTimer({ onCollaborate }: PopupTimerProps) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setVisible(true);
-    }, 5 * 60 * 1000); // 5 minutes
+    }, 30 * 1000); // Trigger set to exactly 30 seconds
     return () => clearTimeout(timer);
   }, []);
 
@@ -56,8 +56,8 @@ export function PopupTimer({ onCollaborate }: PopupTimerProps) {
               {/* Green Line */}
               <div className="flex items-center gap-3 mb-8">
                 <div className="h-[2px] w-12 bg-[#c1ff72]"></div>
-                <span className="text-xs text-white/40 uppercase tracking-[0.3em] font-bold">
-                  5 Minutes Passed
+                <span className="text-xs text-[#c1ff72] uppercase tracking-[0.3em] font-bold">
+                  1 Minute Passed
                 </span>
               </div>
 
