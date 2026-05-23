@@ -22,6 +22,7 @@ import { WorkshopProjectPage } from './components/WorkshopProjectPage';
 import { LinkedInOfferPage } from './components/LinkedInOfferPage';
 import { Footer } from './components/Footer';
 import { WhatsAppButton } from './components/WhatsAppButton';
+import { PopupTimer } from './components/PopupTimer';
 import './styles/globals.css';
 
 type PageType = 'home' | 'm00-studio' | 'personal-works' | 'contact' | 'process' | 'wb-plus' | 'r-plus-plus' | 'aso' | 'base39' | 'base39-case-study' | 'oudlover' | 'oudlover-case-study' | 'nua' | 'artrevo' | 'mawja' | 'carousel-gallery' | 'single-gallery' | 'services' | 'workshop' | 'case-study' | 'linkedin-offer';
@@ -136,6 +137,7 @@ export default function App() {
 
           {currentPage === 'home' && <Footer />}
           {currentPage === 'home' && <WhatsAppButton phoneNumber="212707227263" />}
+          <PopupTimer onCollaborate={() => setCurrentPage('contact')} />
         </div>
       )}
     </>
