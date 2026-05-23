@@ -25,14 +25,10 @@ import { WhatsAppButton } from './components/WhatsAppButton';
 import './styles/globals.css';
 
 type PageType = 'home' | 'm00-studio' | 'personal-works' | 'contact' | 'process' | 'wb-plus' | 'r-plus-plus' | 'aso' | 'base39' | 'base39-case-study' | 'oudlover' | 'oudlover-case-study' | 'nua' | 'artrevo' | 'mawja' | 'carousel-gallery' | 'single-gallery' | 'services' | 'workshop' | 'case-study' | 'linkedin-offer';
-export type Mode = 'graphic' | 'motion';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState<PageType>('home');
-  const [mode, setMode] = useState<Mode>('graphic');
-
-  const toggleMode = () => setMode(prev => prev === 'graphic' ? 'motion' : 'graphic');
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -69,25 +65,21 @@ export default function App() {
     else setCurrentPage('single-gallery');
   };
 
-  const bg = mode === 'motion' ? 'bg-[#c1ff72]' : 'bg-black';
-  const text = mode === 'motion' ? 'text-black' : 'text-white';
-
   return (
     <>
       {isLoading && <LoadingScreen onLoadingComplete={() => setIsLoading(false)} />}
       {!isLoading && (
-        <div className={`min-h-screen transition-colors duration-700 ${bg} ${text}`}>
+        <div className="min-h-screen bg-black text-white">
           <Header
             onResumeClick={() => {}}
             onLogoClick={handleBack}
             onCaseStudyClick={() => setCurrentPage('case-study')}
             onLinkedInOfferClick={() => setCurrentPage('linkedin-offer')}
-            mode={mode}
           />
 
           <AnimatePresence mode="wait">
             {currentPage === 'home' && (
-              <HeroSection key="home" onSectionClick={handleSectionClick} mode={mode} onToggleMode={toggleMode} />
+              <HeroSection key="home" onSectionClick={handleSectionClick} />
             )}
             {currentPage === 'm00-studio' && (
               <M00StudioPage key="m00-studio" onBack={handleBack} />
@@ -142,7 +134,7 @@ export default function App() {
             )}
           </AnimatePresence>
 
-          {currentPage === 'home' && <Footer mode={mode} />}
+          {currentPage === 'home' && <Footer />}
           {currentPage === 'home' && <WhatsAppButton phoneNumber="212707227263" />}
         </div>
       )}
