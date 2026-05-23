@@ -11,10 +11,7 @@ import { WBPlusProjectPage } from './components/WBPlusProjectPage';
 import { RPlusPlusProjectPage } from './components/RPlusPlusProjectPage';
 import { ASOProjectPage } from './components/ASOProjectPage';
 import { Base39ProjectPage } from './components/Base39ProjectPage';
-// TEMPORARILY HIDDEN - Case Study Section (restore when requested)
-// import { Base39CaseStudyPage } from './components/Base39CaseStudyPage';
 import { OudloverProjectPage } from './components/OudloverProjectPage';
-// import { OudloverCaseStudyPage } from './components/OudloverCaseStudyPage';
 import { NuaProjectPage } from './components/NuaProjectPage';
 import { ArtRevoProjectPage } from './components/ArtRevoProjectPage';
 import { MawjaProjectPage } from './components/MawjaProjectPage';
@@ -23,47 +20,23 @@ import { SinglePostGalleryPage } from './components/SinglePostGalleryPage';
 import { ServicePDF } from './components/ServicePDF';
 import { WorkshopProjectPage } from './components/WorkshopProjectPage';
 import { LinkedInOfferPage } from './components/LinkedInOfferPage';
-// import { CaseStudyPage } from './components/CaseStudyPage';
 import { Footer } from './components/Footer';
 import { WhatsAppButton } from './components/WhatsAppButton';
 import './styles/globals.css';
 
 type PageType = 'home' | 'm00-studio' | 'personal-works' | 'contact' | 'process' | 'wb-plus' | 'r-plus-plus' | 'aso' | 'base39' | 'base39-case-study' | 'oudlover' | 'oudlover-case-study' | 'nua' | 'artrevo' | 'mawja' | 'carousel-gallery' | 'single-gallery' | 'services' | 'workshop' | 'case-study' | 'linkedin-offer';
+export type Mode = 'graphic' | 'motion';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState<PageType>('home');
+  const [mode, setMode] = useState<Mode>('graphic');
 
-  // Scroll to top whenever page changes
+  const toggleMode = () => setMode(prev => prev === 'graphic' ? 'motion' : 'graphic');
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [currentPage]);
-
-  const pageVariants = {
-    initial: {
-      opacity: 0,
-      y: 20,
-      scale: 0.98
-    },
-    animate: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: [0.22, 1, 0.36, 1] // Custom easing curve for smooth motion
-      }
-    },
-    exit: {
-      opacity: 0,
-      y: -20,
-      scale: 0.98,
-      transition: {
-        duration: 0.4,
-        ease: [0.22, 1, 0.36, 1]
-      }
-    }
-  };
 
   const handleSectionClick = (sectionId: string) => {
     if (sectionId === 'm00-studio') setCurrentPage('m00-studio');
@@ -88,37 +61,33 @@ export default function App() {
     else if (sectionId === 'linkedin-offer') setCurrentPage('linkedin-offer');
   };
 
-  const handleBack = () => {
-    setCurrentPage('home');
-  };
-
-  const handleBackToASO = () => {
-    setCurrentPage('aso');
-  };
+  const handleBack = () => setCurrentPage('home');
+  const handleBackToASO = () => setCurrentPage('aso');
 
   const handleGalleryView = (galleryType: 'carousel' | 'single') => {
-    if (galleryType === 'carousel') {
-      setCurrentPage('carousel-gallery');
-    } else {
-      setCurrentPage('single-gallery');
-    }
+    if (galleryType === 'carousel') setCurrentPage('carousel-gallery');
+    else setCurrentPage('single-gallery');
   };
+
+  const bg = mode === 'motion' ? 'bg-[#c1ff72]' : 'bg-black';
+  const text = mode === 'motion' ? 'text-black' : 'text-white';
 
   return (
     <>
       {isLoading && <LoadingScreen onLoadingComplete={() => setIsLoading(false)} />}
       {!isLoading && (
-        <div className="min-h-screen bg-black text-white">
-          <Header 
-            onResumeClick={() => {}} 
-            onLogoClick={handleBack} 
+        <div className={`min-h-screen transition-colors duration-700 ${bg} ${text}`}>
+          <Header
+            onResumeClick={() => {}}
+            onLogoClick={handleBack}
             onCaseStudyClick={() => setCurrentPage('case-study')}
             onLinkedInOfferClick={() => setCurrentPage('linkedin-offer')}
+            mode={mode}
           />
-          
+
           <AnimatePresence mode="wait">
             {currentPage === 'home' && (
-              <HeroSection key="home" onSectionClick={handleSectionClick} />
+              <HeroSection key="home" onSectionClick={handleSectionClick} mode={mode} onToggleMode={toggleMode} />
             )}
             {currentPage === 'm00-studio' && (
               <M00StudioPage key="m00-studio" onBack={handleBack} />
@@ -144,19 +113,9 @@ export default function App() {
             {currentPage === 'base39' && (
               <Base39ProjectPage key="base39" onBack={handleBack} />
             )}
-            {/* TEMPORARILY HIDDEN - Case Study Section (restore when requested)
-            {currentPage === 'base39-case-study' && (
-              <Base39CaseStudyPage key="base39-case-study" onBack={() => setCurrentPage('case-study')} />
-            )}
-            */}
             {currentPage === 'oudlover' && (
               <OudloverProjectPage key="oudlover" onBack={handleBack} />
             )}
-            {/* TEMPORARILY HIDDEN - Case Study Section (restore when requested)
-            {currentPage === 'oudlover-case-study' && (
-              <OudloverCaseStudyPage key="oudlover-case-study" onBack={() => setCurrentPage('case-study')} />
-            )}
-            */}
             {currentPage === 'nua' && (
               <NuaProjectPage key="nua" onBack={handleBack} />
             )}
@@ -181,14 +140,9 @@ export default function App() {
             {currentPage === 'linkedin-offer' && (
               <LinkedInOfferPage key="linkedin-offer" onBack={handleBack} />
             )}
-            {/* TEMPORARILY HIDDEN - Case Study Page (restore when requested)
-            {currentPage === 'case-study' && (
-              <CaseStudyPage key="case-study" onBack={handleBack} onProjectClick={handleSectionClick} />
-            )}
-            */}
           </AnimatePresence>
 
-          {currentPage === 'home' && <Footer />}
+          {currentPage === 'home' && <Footer mode={mode} />}
           {currentPage === 'home' && <WhatsAppButton phoneNumber="212707227263" />}
         </div>
       )}
