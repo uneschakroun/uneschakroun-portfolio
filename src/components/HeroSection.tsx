@@ -1,5 +1,6 @@
-import { motion } from 'motion/react';
-import { ArrowUpRight, Sparkles, Users, Mail, FileText } from 'lucide-react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { ArrowUpRight, Sparkles, Mail } from 'lucide-react';
 import { GlitchText } from './GlitchText';
 import asoImage from 'figma:asset/8729a78c210ddc92a48825d48de5e819924a6bc0.png';
 import base39Image from 'figma:asset/e013c937b6ed02e6b798e44d2cfacb342a304f3c.png';
@@ -8,14 +9,59 @@ import nuaImage from 'figma:asset/3f7f8e75eb30d72bae25f1b0f35471d18ece2bb4.png';
 import artRevoImage from 'figma:asset/56bcda8c22d8322fce62b9f4e84f240aee9309e6.png';
 import marqueeImage from 'figma:asset/bdca5c3cc2e1f8fac4d8b1bfafb1f629483d8a4e.png';
 
+type Lang = 'EN' | 'FR' | 'AR';
+
+const translations = {
+  EN: {
+    badge: 'Available to Relocate',
+    title: 'Senior Designer',
+    subtitle: 'GCC Expertise',
+    description: 'Brand Identity · Brand Guidelines · Social Media Design',
+    featured: 'Featured Work',
+    services: 'Services Overview',
+    servicesDesc: 'Freelance design services & pricing',
+    contact: 'Contact Me',
+    contactDesc: "Let's work together",
+    dir: 'ltr' as const,
+  },
+  FR: {
+    badge: 'Disponible pour relocalisation',
+    title: 'Designer Senior',
+    subtitle: 'Expertise GCC',
+    description: 'Identité de marque · Charte graphique · Design réseaux sociaux',
+    featured: 'Travaux Sélectionnés',
+    services: 'Nos Services',
+    servicesDesc: 'Services design freelance & tarifs',
+    contact: 'Me Contacter',
+    contactDesc: 'Travaillons ensemble',
+    dir: 'ltr' as const,
+  },
+  AR: {
+    badge: 'متاح للانتقال',
+    title: 'مصمم أول',
+    subtitle: 'خبرة الخليج',
+    description: 'هوية بصرية · دليل العلامة · تصميم وسائل التواصل',
+    featured: 'أعمال مميزة',
+    services: 'الخدمات',
+    servicesDesc: 'خدمات تصميم مستقل وأسعار',
+    contact: 'تواصل معي',
+    contactDesc: 'لنعمل معاً',
+    dir: 'rtl' as const,
+  },
+};
+
 interface HeroSectionProps {
   onSectionClick: (sectionId: string) => void;
 }
 
 export function HeroSection({ onSectionClick }: HeroSectionProps) {
+  const [lang, setLang] = useState<Lang>('EN');
+  const t = translations[lang];
+
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 relative pt-24 md:pt-32 pb-12">
+    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 relative pt-24 md:pt-32 pb-12" dir={t.dir}>
       <div className="container mx-auto max-w-7xl w-full">
+
         {/* Hero Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -25,42 +71,64 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
           className="mb-12 sm:mb-16 md:mb-20"
         >
           <div className="border border-white/10 p-6 sm:p-8 md:p-12">
+
+            {/* Language Switcher */}
+            <div className="flex items-center gap-1 mb-8 w-fit">
+              {(['EN', 'FR', 'AR'] as Lang[]).map((l, i) => (
+                <div key={l} className="flex items-center">
+                  <button
+                    onClick={() => setLang(l)}
+                    className={`text-xs font-bold uppercase tracking-[0.2em] px-2 py-1 transition-all duration-200 ${
+                      lang === l
+                        ? 'text-[#c1ff72]'
+                        : 'text-white/30 hover:text-white/60'
+                    }`}
+                  >
+                    {l}
+                  </button>
+                  {i < 2 && <span className="text-white/20 text-xs">|</span>}
+                </div>
+              ))}
+            </div>
+
             <div className="flex items-center gap-3 mb-6">
               <div className="h-[2px] w-12 sm:w-16 bg-[#c1ff72]"></div>
-              <span className="text-xs sm:text-sm text-white/40 uppercase tracking-[0.3em] font-bold">Available for work</span>
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={lang + 'badge'}
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
+                  transition={{ duration: 0.2 }}
+                  className="text-xs sm:text-sm text-white/40 uppercase tracking-[0.3em] font-bold"
+                >
+                  {t.badge}
+                </motion.span>
+              </AnimatePresence>
             </div>
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 uppercase leading-[1.1]">
-              Senior Designer<br />
-              <span className="text-[#c1ff72] text-lg sm:text-3xl md:text-4xl lg:text-5xl">Morocco • KSA • UAE</span>
-            </h1>
-            <p className="text-sm sm:text-base md:text-lg text-white/60 max-w-2xl uppercase tracking-wide leading-relaxed mb-6 sm:mb-8">
-              Creative thinker who can execute the soul of your brand identity
-            </p>
-            
-            {/* Request a Proposal CTA - Compact Version */}
-            <a
-              href="https://forms.gle/mqtH6UiuaaRMamyq8"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-3 sm:gap-4 border border-[#c1ff72]/30 bg-[#c1ff72]/5 px-4 py-3 sm:px-6 sm:py-4 hover:border-[#c1ff72]/60 hover:bg-[#c1ff72]/10 transition-all duration-300 active:scale-[0.98]"
-            >
-              <div className="w-8 h-8 sm:w-10 sm:h-10 border border-[#c1ff72] flex items-center justify-center bg-[#c1ff72]/10 group-hover:bg-[#c1ff72]/20 transition-all duration-300 shrink-0">
-                <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-[#c1ff72]" />
-              </div>
-              <div className="flex-1">
-                <div className="text-sm sm:text-base md:text-lg font-bold uppercase tracking-tight text-white group-hover:text-[#c1ff72] transition-colors">
-                  Request a Free Proposal
-                </div>
-                <div className="text-[10px] sm:text-xs text-white/40 uppercase tracking-wide">
-                  Get customized quote
-                </div>
-              </div>
-              <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 text-[#c1ff72] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 shrink-0" />
-            </a>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={lang}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+              >
+                <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 uppercase leading-[1.1]">
+                  {t.title}<br />
+                  <span className="text-[#c1ff72] text-lg sm:text-3xl md:text-4xl lg:text-5xl">{t.subtitle}</span>
+                </h1>
+                <p className="text-sm sm:text-base md:text-lg text-white/60 max-w-2xl uppercase tracking-wide leading-relaxed">
+                  {t.description}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+
           </div>
         </motion.div>
 
-        {/* Animated Marquee - Moved here, right after hero */}
+        {/* Animated Marquee */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -91,14 +159,14 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
         >
           <div className="flex items-center gap-4">
             <div className="h-[2px] w-8 bg-[#c1ff72]"></div>
-            <span className="text-xs sm:text-sm text-white/40 uppercase tracking-[0.3em] font-bold">Featured Work</span>
+            <span className="text-xs sm:text-sm text-white/40 uppercase tracking-[0.3em] font-bold">{t.featured}</span>
           </div>
         </motion.div>
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 gap-6 sm:gap-8 mb-12 sm:mb-16">
-          
-          {/* Art Revo Project */}
+
+          {/* Art Revo */}
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -107,24 +175,16 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
             onClick={() => onSectionClick('artrevo')}
             className="group relative cursor-pointer"
           >
-            <div className="relative overflow-hidden bg-zinc-900 border border-white/10 hover:border-[#c1ff72]/50 active:border-[#c1ff72]/50 transition-all duration-300">
+            <div className="relative overflow-hidden bg-zinc-900 border border-white/10 hover:border-[#c1ff72]/50 transition-all duration-300">
               <div className="aspect-[16/9]">
-                <img
-                  src={artRevoImage}
-                  alt="Art Revo"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+                <img src={artRevoImage} alt="Art Revo" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-60" />
             </div>
             <div className="mt-3 sm:mt-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] sm:text-xs text-[#c1ff72] font-bold uppercase tracking-[0.3em]">
-                  Creative House & Marketing Agency
-                </span>
-                <span className="text-[10px] sm:text-xs text-white/40 font-bold uppercase tracking-wider">
-                  2024
-                </span>
+                <span className="text-[10px] sm:text-xs text-[#c1ff72] font-bold uppercase tracking-[0.3em]">Creative House & Marketing Agency</span>
+                <span className="text-[10px] sm:text-xs text-white/40 font-bold uppercase tracking-wider">2024</span>
               </div>
               <h3 className="text-xl sm:text-2xl font-bold uppercase group-hover:text-[#c1ff72] transition-colors">
                 <GlitchText>Art Revo</GlitchText>
@@ -132,7 +192,7 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
             </div>
           </motion.div>
 
-          {/* Base39 Project */}
+          {/* Base39 */}
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -141,24 +201,16 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
             onClick={() => onSectionClick('base39')}
             className="group relative cursor-pointer"
           >
-            <div className="relative overflow-hidden bg-zinc-900 border border-white/10 hover:border-[#c1ff72]/50 active:border-[#c1ff72]/50 transition-all duration-300">
+            <div className="relative overflow-hidden bg-zinc-900 border border-white/10 hover:border-[#c1ff72]/50 transition-all duration-300">
               <div className="aspect-[16/9]">
-                <img
-                  src={base39Image}
-                  alt="Base39"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+                <img src={base39Image} alt="Base39" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-60" />
             </div>
             <div className="mt-3 sm:mt-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] sm:text-xs text-[#c1ff72] font-bold uppercase tracking-[0.3em]">
-                  Brand Identity
-                </span>
-                <span className="text-[10px] sm:text-xs text-white/40 font-bold uppercase tracking-wider">
-                  2025
-                </span>
+                <span className="text-[10px] sm:text-xs text-[#c1ff72] font-bold uppercase tracking-[0.3em]">Brand Identity</span>
+                <span className="text-[10px] sm:text-xs text-white/40 font-bold uppercase tracking-wider">2025</span>
               </div>
               <h3 className="text-xl sm:text-2xl font-bold uppercase group-hover:text-[#c1ff72] transition-colors">
                 <GlitchText>Base39</GlitchText>
@@ -167,7 +219,7 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
             </div>
           </motion.div>
 
-          {/* TUHWC Project */}
+          {/* TUHWC */}
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -176,24 +228,16 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
             onClick={() => onSectionClick('aso')}
             className="group relative cursor-pointer"
           >
-            <div className="relative overflow-hidden bg-zinc-900 border border-white/10 hover:border-[#c1ff72]/50 active:border-[#c1ff72]/50 transition-all duration-300">
+            <div className="relative overflow-hidden bg-zinc-900 border border-white/10 hover:border-[#c1ff72]/50 transition-all duration-300">
               <div className="aspect-[16/9]">
-                <img
-                  src={asoImage}
-                  alt="The Ultimate Human Wellness Clinic"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+                <img src={asoImage} alt="The Ultimate Human Wellness Clinic" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-60" />
             </div>
             <div className="mt-3 sm:mt-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] sm:text-xs text-[#c1ff72] font-bold uppercase tracking-[0.3em]">
-                  Instagram Content Design
-                </span>
-                <span className="text-[10px] sm:text-xs text-white/40 font-bold uppercase tracking-wider">
-                  2025
-                </span>
+                <span className="text-[10px] sm:text-xs text-[#c1ff72] font-bold uppercase tracking-[0.3em]">Instagram Content Design</span>
+                <span className="text-[10px] sm:text-xs text-white/40 font-bold uppercase tracking-wider">2025</span>
               </div>
               <h3 className="text-xl sm:text-2xl font-bold uppercase group-hover:text-[#c1ff72] transition-colors">
                 <GlitchText>The Ultimate Human WC</GlitchText>
@@ -201,7 +245,7 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
             </div>
           </motion.div>
 
-          {/* Oudlover Project */}
+          {/* Oudlover */}
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -210,24 +254,16 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
             onClick={() => onSectionClick('oudlover')}
             className="group relative cursor-pointer"
           >
-            <div className="relative overflow-hidden bg-zinc-900 border border-white/10 hover:border-[#c1ff72]/50 active:border-[#c1ff72]/50 transition-all duration-300">
+            <div className="relative overflow-hidden bg-zinc-900 border border-white/10 hover:border-[#c1ff72]/50 transition-all duration-300">
               <div className="aspect-[16/9]">
-                <img
-                  src={oudloverImage}
-                  alt="Oudlover"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+                <img src={oudloverImage} alt="Oudlover" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-60" />
             </div>
             <div className="mt-3 sm:mt-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] sm:text-xs text-[#c1ff72] font-bold uppercase tracking-[0.3em]">
-                  Brand Identity
-                </span>
-                <span className="text-[10px] sm:text-xs text-white/40 font-bold uppercase tracking-wider">
-                  2024
-                </span>
+                <span className="text-[10px] sm:text-xs text-[#c1ff72] font-bold uppercase tracking-[0.3em]">Brand Identity</span>
+                <span className="text-[10px] sm:text-xs text-white/40 font-bold uppercase tracking-wider">2024</span>
               </div>
               <h3 className="text-xl sm:text-2xl font-bold uppercase group-hover:text-[#c1ff72] transition-colors">
                 <GlitchText>Oudlover</GlitchText>
@@ -235,7 +271,7 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
             </div>
           </motion.div>
 
-          {/* Nua Project */}
+          {/* Nua */}
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -244,24 +280,16 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
             onClick={() => onSectionClick('nua')}
             className="group relative cursor-pointer"
           >
-            <div className="relative overflow-hidden bg-zinc-900 border border-white/10 hover:border-[#c1ff72]/50 active:border-[#c1ff72]/50 transition-all duration-300">
+            <div className="relative overflow-hidden bg-zinc-900 border border-white/10 hover:border-[#c1ff72]/50 transition-all duration-300">
               <div className="aspect-[16/9]">
-                <img
-                  src={nuaImage}
-                  alt="Nua"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+                <img src={nuaImage} alt="Nua" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-60" />
             </div>
             <div className="mt-3 sm:mt-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] sm:text-xs text-[#c1ff72] font-bold uppercase tracking-[0.3em]">
-                  Brand Design
-                </span>
-                <span className="text-[10px] sm:text-xs text-white/40 font-bold uppercase tracking-wider">
-                  2024
-                </span>
+                <span className="text-[10px] sm:text-xs text-[#c1ff72] font-bold uppercase tracking-[0.3em]">Brand Design</span>
+                <span className="text-[10px] sm:text-xs text-white/40 font-bold uppercase tracking-wider">2024</span>
               </div>
               <h3 className="text-xl sm:text-2xl font-bold uppercase group-hover:text-[#c1ff72] transition-colors">
                 <GlitchText>Nua</GlitchText>
@@ -270,9 +298,8 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
           </motion.div>
         </div>
 
-        {/* Navigation Cards Grid - Only Services and Contact */}
+        {/* Navigation Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-          {/* Services Overview Card */}
           <motion.button
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -282,7 +309,6 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
             className="group relative text-left border border-white/10 p-6 sm:p-8 hover:border-[#c1ff72]/50 transition-all duration-300 active:scale-[0.98]"
           >
             <div className="absolute inset-0 bg-[#c1ff72]/0 group-hover:bg-[#c1ff72]/5 transition-all duration-300"></div>
-            
             <div className="relative z-10 flex flex-col h-full min-h-[220px]">
               <div className="flex items-start justify-between mb-8">
                 <span className="text-xs sm:text-sm text-[#c1ff72]/60 font-bold uppercase tracking-[0.3em]">01</span>
@@ -291,9 +317,9 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
                 </div>
               </div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 uppercase leading-tight flex-1">
-                <GlitchText>Services<br />Overview</GlitchText>
+                <GlitchText>{t.services}</GlitchText>
               </h2>
-              <p className="text-xs sm:text-sm text-white/40 uppercase tracking-wide mb-6">Freelance design services & pricing</p>
+              <p className="text-xs sm:text-sm text-white/40 uppercase tracking-wide mb-6">{t.servicesDesc}</p>
               <div className="flex items-center justify-end">
                 <ArrowUpRight className="w-5 h-5 sm:w-6 sm:h-6 text-white/20 group-hover:text-[#c1ff72] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
               </div>
@@ -301,7 +327,6 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
             </div>
           </motion.button>
 
-          {/* Contact Card */}
           <motion.button
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -311,7 +336,6 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
             className="group relative text-left border border-white/10 p-6 sm:p-8 hover:border-[#c1ff72]/50 transition-all duration-300 active:scale-[0.98]"
           >
             <div className="absolute inset-0 bg-[#c1ff72]/0 group-hover:bg-[#c1ff72]/5 transition-all duration-300"></div>
-            
             <div className="relative z-10 flex flex-col h-full min-h-[220px]">
               <div className="flex items-start justify-between mb-8">
                 <span className="text-xs sm:text-sm text-[#c1ff72]/60 font-bold uppercase tracking-[0.3em]">02</span>
@@ -320,9 +344,9 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
                 </div>
               </div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 uppercase leading-tight flex-1">
-                <GlitchText>Contact<br />Me</GlitchText>
+                <GlitchText>{t.contact}</GlitchText>
               </h2>
-              <p className="text-xs sm:text-sm text-white/40 uppercase tracking-wide mb-6">Let's work together</p>
+              <p className="text-xs sm:text-sm text-white/40 uppercase tracking-wide mb-6">{t.contactDesc}</p>
               <div className="flex items-center justify-end">
                 <ArrowUpRight className="w-5 h-5 sm:w-6 sm:h-6 text-white/20 group-hover:text-[#c1ff72] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
               </div>
