@@ -27,11 +27,12 @@ export function HeroSection({ onSectionClick }: HeroSectionProps) {
           <div className="border border-white/10 p-6 sm:p-8 md:p-12">
             <div className="flex items-center gap-3 mb-6">
               <div className="h-[2px] w-12 sm:w-16 bg-[#c1ff72]"></div>
-              <span className="text-xs sm:text-sm text-white/40 uppercase tracking-[0.3em] font-bold">Available to Relocate</span>
+              <span className="text-xs sm:text-sm text-white/40 uppercase tracking-[0.3em] font-bold">
+                Based in Morocco · Open to Europe
+              </span>
             </div>
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 uppercase leading-[1.1]">
-              Senior Designer<br />
-              <span className="text-[#c1ff72] text-lg sm:text-3xl md:text-4xl lg:text-5xl">GCC Expertise</span>
+              Senior Designer
             </h1>
             <p className="text-sm sm:text-base md:text-lg text-white/60 max-w-2xl uppercase tracking-wide leading-relaxed">
               Brand Identity · Brand Guidelines · Social Media Design
